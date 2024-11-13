@@ -1,0 +1,41 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    // Flutter Gradle Plugin debe aplicarse después de los plugins de Android y Kotlin.
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    namespace = "com.example.reconocimiento_imagenes" // Reemplaza con el namespace correcto de tu aplicación
+    compileSdk = 33  // Puedes ajustar esta versión según tus necesidades
+
+    ndkVersion = "21.3.6528147" // Ajusta la versión de NDK si tienes una específica o comenta esta línea si no es necesaria
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    defaultConfig {
+        applicationId = "com.example.reconocimiento_imagenes" // Reemplaza con tu Application ID
+        minSdk = 21  // Ajusta a la versión mínima requerida por tus dependencias
+        targetSdk = 33  // Asegúrate de que sea compatible con compileSdk
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    buildTypes {
+        release {
+            // Firma con las claves de depuración para que `flutter run --release` funcione.
+            signingConfig = signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source = "../.." // Esto permite que Flutter encuentre el código fuente principal del proyecto
+}

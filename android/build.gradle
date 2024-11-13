@@ -1,0 +1,42 @@
+// Configuración de buildscript para el Android Gradle Plugin (AGP)
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.0.0' // AGP compatible con Gradle 8.3
+    }
+}
+
+// Define repositorios para todas las dependencias de subproyectos
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Define el directorio de construcción del proyecto raíz
+rootProject.buildDir = "../build"
+
+// Configura los directorios de construcción para subproyectos
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    
+    // Evalúa el proyecto de la aplicación principal antes de otros módulos
+    evaluationDependsOn(":app")
+
+    // Forzar un namespace en todos los subproyectos que tengan un bloque `android`
+    afterEvaluate { project ->
+        if (project.hasProperty("android")) {
+            // Ajusta este namespace si necesitas un valor específico
+            project.android.namespace = "com.example.reconocimiento_imagenes"
+        }
+    }
+}
+
+// Tarea para limpiar el directorio de construcción
+tasks.register("clean", type: Delete) {
+    delete rootProject.buildDir
+}
